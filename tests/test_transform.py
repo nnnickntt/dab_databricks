@@ -28,10 +28,6 @@ class TestTierDiscount(unittest.TestCase):
         except:
             cls.spark = spark
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.spark.stop()
-
     def test_apply_function(self):
         fact_sales_schema = StructType([
             StructField("transaction_id", IntegerType(), True),
