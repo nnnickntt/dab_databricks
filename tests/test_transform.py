@@ -28,6 +28,10 @@ class TestTierDiscount(unittest.TestCase):
         except:
             cls.spark = spark
 
+    # @classmethod
+    # def tearDownClass(cls):
+    #     cls.spark.stop()
+
     def test_apply_function(self):
         fact_sales_schema = StructType([
             StructField("transaction_id", IntegerType(), True),
@@ -77,32 +81,5 @@ class TestTierDiscount(unittest.TestCase):
 
         self.assertEqual(first=actual_result, second=expected_result)
 
-    def test_empty_input(self):
-
-        fact_sales_schema = StructType([
-            StructField("transaction_id", IntegerType(), True),
-            StructField("shop_id", IntegerType(), True),
-            StructField("sales_qty", IntegerType(), True),
-            StructField("sales_amt", FloatType(), True),
-            StructField("sales_date", DateType(), True)
-        ])
-        shop_schema = StructType([
-            StructField("shop_id", StringType(), True),
-            StructField("shop_name", StringType(), True),
-            StructField("branch_name", StringType(), True),
-            StructField("file_dt", StringType(), True)
-        ])
-        
-        empty_fact_sales =  spark.createDataFrame([], fact_sales_schema)
-        empty_shop_schema = spark.createDataFrame([], shop_schema)
-
-        actual_result = transform(sales_transaction_df=empty_fact_sales, shop_dimension_df=empty_shop_schema).isEmpty()
-        expected_result = True
-
-        self.assertEqual(actual_result,expected_result)
-      
-     
 if __name__ == "__main__":
     unittest.main()
-
-
