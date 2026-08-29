@@ -1,11 +1,11 @@
 resources:
   jobs:
     transform_gold:
-      name: transform_gold_${bundle.target}
+      name: transform_gold
 
       trigger:
         periodic:
-          interval: 2
+          interval: 1
           unit: DAYS
 
       parameters:
@@ -17,3 +17,9 @@ resources:
           notebook_task:
             notebook_path: ../src/module_12_framework/gold_layer/gold.py
           environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "4"
+            dependencies: ${var.package_dependencies}

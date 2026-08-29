@@ -1,15 +1,16 @@
 # Databricks notebook source
 # DBTITLE 1,Import transform function
+notebook_path = dbutils.notebook.entry_point.getDbutils().notebook().getContext().notebookPath().get()
+start_index = notebook_path.find("src")
+project_dir = notebook_path[:start_index]
+base_directory = f"/Workspace{project_dir}"
+
 try:
     from unified_transform_logic.gold import transform
     print("Import from wheel package")
 except ModuleNotFoundError:
     import sys
     
-    notebook_path = dbutils.notebook.entry_point.getDbutils().notebook().getContext().notebookPath().get()
-    start_index = notebook_path.find("src")
-    project_dir = notebook_path[:start_index]
-    base_directory = f"/Workspace{project_dir}"
     src_path = f"{base_directory}logic_packages/src"
     
     if src_path not in sys.path:
